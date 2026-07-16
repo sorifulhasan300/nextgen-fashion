@@ -1,12 +1,10 @@
 "use client";
 
-import HeroSection from "@/components/HeroSection";
 import ProductExplorer from "@/components/ProductExplorer";
 
-export default function Home() {
+export default function Shop() {
   return (
     <div className="min-h-screen">
-      <HeroSection />
       <ProductExplorer />
     </div>
   );
