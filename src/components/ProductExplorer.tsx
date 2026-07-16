@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, SlidersHorizontal } from "lucide-react";
 import ProductCard from "@/components/ProductCard";
@@ -8,6 +8,7 @@ import ProductSkeleton from "@/components/ProductSkeleton";
 import { products } from "@/data/products";
 
 const categories = Array.from(new Set(products.map((p) => p.category)));
+const ITEMS_PER_PAGE = 8;
 
 interface ProductExplorerProps {
   initialCategory?: string | null;
@@ -25,6 +26,7 @@ export default function ProductExplorer({
   );
   const [sortOrder, setSortOrder] = useState<"asc" | "desc" | null>(null);
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1200);
@@ -51,6 +53,23 @@ export default function ProductExplorer({
 
     return result;
   }, [searchQuery, activeCategory, sortOrder]);
+
+  const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery, activeCategory, sortOrder]);
+
+  const paginatedProducts = useMemo(() => {
+    const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    return filteredProducts.slice(startIndex, endIndex);
+  }, [filteredProducts, currentPage]);
+
+  const goToPage = useCallback((page: number) => {
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, []);
 
   const clearFilters = () => {
     setSearchQuery("");
@@ -171,11 +190,39 @@ export default function ProductExplorer({
           ))}
         </div>
       ) : filteredProducts.length > 0 ? (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-          {filteredProducts.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            {paginatedProducts.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          {totalPages > 1 && (
+            <div className="mt-12 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => goToPage(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="inline-flex items-center rounded-full border border-neutral-200 px-5 py-2.5 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:border-neutral-800 hover:text-neutral-900 disabled:hover:border-neutral-200 disabled:hover:text-neutral-600"
+              >
+                Previous
+              </button>
+
+              <span className="text-[11px] font-medium tracking-[0.1em] text-neutral-500 uppercase">
+                Page {currentPage} of {totalPages}
+              </span>
+
+              <button
+                type="button"
+                onClick={() => goToPage(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="inline-flex items-center rounded-full border border-neutral-200 px-5 py-2.5 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all disabled:opacity-30 disabled:cursor-not-allowed hover:border-neutral-800 hover:text-neutral-900 disabled:hover:border-neutral-200 disabled:hover:text-neutral-600"
+              >
+                Next
+              </button>
+            </div>
+          )}
+        </>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 text-center">
           <p className="text-[14px] text-neutral-400">

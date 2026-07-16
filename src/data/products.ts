@@ -169,47 +169,4 @@ export const products: Product[] = [
     description:
       "Water-resistant windbreaker with a breathable mesh lining. Features a drawstring hood, zippered pockets, and elasticated hem.",
   },
-  //=======
-  {
-    id: 13,
-    name: "Slim-Flux Casual Shirt",
-    category: "Casual Shirts",
-    price: 59.99,
-    image:
-      "https://images.unsplash.com/photo-1488161628813-04466f872be2?w=800&q=80",
-    rating: 4.5,
-    colors: ["White", "Light Blue", "Striped Blue"],
-    sizes: ["S", "M", "L", "XL"],
-    inStock: true,
-    description:
-      "Slim-fit stretch cotton shirt with a hidden button-down collar. Moisture-wicking treatment keeps you comfortable all day.",
-  },
-  {
-    id: 14,
-    name: "Heavyweight Pocket T-Shirt",
-    category: "T-shirts",
-    price: 39.99,
-    image:
-      "	https://imgs.search.brave.com/M5z_2OYwxkSwPNUQC2GvAWmkn_QLrTWtfzvMU70feLs/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9tLm1l/ZGlhLWFtYXpvbi5j/b20vaW1hZ2VzL0kv/ODErS1pxMENYTUwu/anBn",
-    rating: 4.6,
-    colors: ["Black", "White", "Faded Black"],
-    sizes: ["S", "M", "L", "XL", "XXL"],
-    inStock: true,
-    description:
-      "Thick 220 GSM cotton tee with a chest patch pocket. Pre-washed for minimal shrinkage and a structured, premium hand feel.",
-  },
-  {
-    id: 15,
-    name: "Technical Windbreaker",
-    category: "Outerwear",
-    price: 139.99,
-    image:
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=800&q=80",
-    rating: 4.4,
-    colors: ["Black", "Grey", "Navy"],
-    sizes: ["S", "M", "L", "XL"],
-    inStock: true,
-    description:
-      "Water-resistant windbreaker with a breathable mesh lining. Features a drawstring hood, zippered pockets, and elasticated hem.",
-  },
 ];
