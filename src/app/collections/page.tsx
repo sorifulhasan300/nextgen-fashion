@@ -14,25 +14,29 @@ const collections: Collection[] = [
     title: "The Panjabi Edit",
     subtitle: "Timeless traditional wear reimagined.",
     category: "Panjabi",
-    image: "https://images.unsplash.com/photo-1595231712607-4c8e17383aa6?w=1200&q=80",
+    image:
+      "https://media.aarong.com/media/catalog/product/0/0/0040000106956.jpg?optimize=high&bg-color=255%2C255%2C255&fit=bounds&height=&width=1920",
   },
   {
     title: "Casual Essentials",
     subtitle: "Smart shirts for your everyday hustle.",
     category: "Casual Shirts",
-    image: "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=1200&q=80",
+    image:
+      "https://images.unsplash.com/photo-1596755094514-f87e34085b2c?w=1200&q=80",
   },
   {
     title: "Urban Streetwear",
     subtitle: "Comfort meets contemporary style.",
     category: "T-shirts",
-    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=80",
+    image:
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=1200&q=80",
   },
   {
     title: "Outerwear Edit",
     subtitle: "Layered sophistication for every season.",
     category: "Outerwear",
-    image: "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1200&q=80",
+    image:
+      "https://images.unsplash.com/photo-1539533018447-63fcce2678e3?w=1200&q=80",
   },
 ];
 

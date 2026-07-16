@@ -70,26 +70,43 @@ export default function ProductExplorer({
           <div className="mt-2 h-px w-12 bg-neutral-200" />
         </div>
 
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
-          <div className="relative">
-            <Search
-              strokeWidth={1.5}
-              className="absolute left-0 top-1/2 -translate-y-1/2 size-4 text-neutral-400"
-            />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Search products..."
-              className="w-full bg-transparent pl-7 pr-4 pb-2 pt-1 text-[14px] text-neutral-700 placeholder:text-neutral-300 outline-none border-b border-neutral-200 focus:border-neutral-400 transition-colors sm:w-64"
-            />
+        <div className="flex flex-col gap-5">
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="relative md:max-w-xs lg:max-w-md w-full">
+              <Search
+                strokeWidth={1.5}
+                className="absolute left-0 top-1/2 -translate-y-1/2 size-4 text-neutral-400"
+              />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search products..."
+                className="w-full bg-transparent pl-7 pr-4 pb-2 pt-1 text-[14px] text-neutral-700 placeholder:text-neutral-300 outline-none border-b border-neutral-200 focus:border-neutral-400 transition-colors"
+              />
+            </div>
+
+            <div className="flex items-center gap-2">
+              <SlidersHorizontal strokeWidth={1.5} className="size-4 text-neutral-400" />
+              <select
+                value={sortOrder ?? ""}
+                onChange={(e) =>
+                  setSortOrder(e.target.value ? (e.target.value as "asc" | "desc") : null)
+                }
+                className="bg-transparent border-b border-neutral-200 pb-2 pt-1 text-[13px] text-neutral-600 outline-none focus:border-neutral-400 transition-colors cursor-pointer"
+              >
+                <option value="">Sort by Price</option>
+                <option value="asc">Price: Low to High</option>
+                <option value="desc">Price: High to Low</option>
+              </select>
+            </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar [-webkit-overflow-scrolling:touch] lg:flex-wrap lg:overflow-visible">
             <button
               type="button"
               onClick={() => setActiveCategory(null)}
-              className={`inline-flex items-center rounded-full border px-4 py-1.5 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all ${
+              className={`inline-flex items-center whitespace-nowrap rounded-full border px-4 py-2 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all ${
                 activeCategory === null
                   ? "border-neutral-800 bg-neutral-800 text-white"
                   : "border-neutral-200 bg-transparent text-neutral-500 hover:border-neutral-300"
@@ -104,7 +121,7 @@ export default function ProductExplorer({
                 onClick={() =>
                   setActiveCategory((prev) => (prev === cat ? null : cat))
                 }
-                className={`inline-flex items-center rounded-full border px-4 py-1.5 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all ${
+                className={`inline-flex items-center whitespace-nowrap rounded-full border px-4 py-2 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all ${
                   activeCategory === cat
                     ? "border-neutral-800 bg-neutral-800 text-white"
                     : "border-neutral-200 bg-transparent text-neutral-500 hover:border-neutral-300"
@@ -113,21 +130,6 @@ export default function ProductExplorer({
                 {cat}
               </button>
             ))}
-          </div>
-
-          <div className="flex items-center gap-2 sm:ml-auto">
-            <SlidersHorizontal strokeWidth={1.5} className="size-4 text-neutral-400" />
-            <select
-              value={sortOrder ?? ""}
-              onChange={(e) =>
-                setSortOrder(e.target.value ? (e.target.value as "asc" | "desc") : null)
-              }
-              className="bg-transparent border-b border-neutral-200 pb-2 pt-1 text-[13px] text-neutral-600 outline-none focus:border-neutral-400 transition-colors cursor-pointer"
-            >
-              <option value="">Sort by Price</option>
-              <option value="asc">Price: Low to High</option>
-              <option value="desc">Price: High to Low</option>
-            </select>
           </div>
         </div>
       </div>
