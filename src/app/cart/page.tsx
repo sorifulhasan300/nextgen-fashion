@@ -9,7 +9,7 @@ import { useToast } from "@/context/ToastContext";
 import { Button } from "@/components/ui/button";
 
 export default function CartPage() {
-  const { cartItems, updateQuantity, removeFromCart, getCartTotal } =
+  const { cartItems, clearCart, updateQuantity, removeFromCart, getCartTotal } =
     useCart();
   const { showToast } = useToast();
   const [removingIds, setRemovingIds] = useState<Set<string>>(new Set());
@@ -50,6 +50,7 @@ export default function CartPage() {
   };
 
   const handleCheckout = () => {
+    clearCart();
     showToast({ message: "Order simulation successful!", label: "SUCCESS", type: "cart" });
   };
 

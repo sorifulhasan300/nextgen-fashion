@@ -102,7 +102,12 @@ export const CartProvider = ({
     []
   );
 
-  const clearCart = useCallback(() => setCartItems([]), []);
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("cart");
+    }
+  }, []);
 
   const getCartTotal = useCallback(() => {
     return cartItems.reduce(

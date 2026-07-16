@@ -1,7 +1,6 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { motion } from "framer-motion";
@@ -11,6 +10,7 @@ import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/context/ToastContext";
 import { Button } from "@/components/ui/button";
+import { ProductImageZoom } from "@/components/ProductImageZoom";
 
 const colorMap: Record<string, string> = {
   Cream: "#F5F1E6",
@@ -132,20 +132,12 @@ export default function ProductPage() {
         </Link>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
-          <div className="space-y-4">
-            <div className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-[#F5F2ED] p-4 sm:p-6">
-              <div className="relative aspect-[3/4] overflow-hidden rounded-xl">
-                <Image
-                  src={product.image}
-                  alt={product.name}
-                  fill
-                  className="object-cover"
-                  priority
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-              </div>
-            </div>
-          </div>
+          <ProductImageZoom
+            src={product.image}
+            alt={product.name}
+            zoomLevel={2.5}
+            lensSize={160}
+          />
 
           <div className="flex flex-col">
             <span className="mb-4 w-fit rounded-full border border-neutral-200 bg-white px-3 py-1 text-[10px] font-semibold tracking-[0.15em] text-neutral-600 uppercase">
