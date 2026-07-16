@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Star, ArrowLeft, Check, Heart } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
@@ -259,21 +260,23 @@ export default function ProductPage() {
               </button>
             </div>
 
-            <Button
-              onClick={handleAddToCart}
-              disabled={!product.inStock}
-              size="lg"
-              className="w-full rounded-xl py-4 text-sm font-medium tracking-wide disabled:opacity-50"
-            >
-              {product.inStock ? (
-                <span className="inline-flex items-center gap-2">
-                  <Check strokeWidth={1.5} className="size-4" />
-                  Add to Cart
-                </span>
-              ) : (
-                "Out of Stock"
-              )}
-            </Button>
+            <motion.div whileTap={{ scale: 0.97 }}>
+              <Button
+                onClick={handleAddToCart}
+                disabled={!product.inStock}
+                size="lg"
+                className="w-full rounded-xl py-4 text-sm font-medium tracking-wide disabled:opacity-50"
+              >
+                {product.inStock ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Check strokeWidth={1.5} className="size-4" />
+                    Add to Cart
+                  </span>
+                ) : (
+                  "Out of Stock"
+                )}
+              </Button>
+            </motion.div>
 
             {!product.inStock && (
               <p className="mt-3 text-center text-[10px] font-semibold tracking-[0.15em] text-neutral-400 uppercase">

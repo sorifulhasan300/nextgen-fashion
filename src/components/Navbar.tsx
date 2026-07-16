@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import {
   Search,
@@ -11,6 +11,7 @@ import {
   Menu,
   X,
 } from "lucide-react";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
   Drawer,
@@ -143,9 +144,15 @@ export default function Navbar() {
           >
             <ShoppingBag strokeWidth={1.5} className="size-[18px]" />
             {cartCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-neutral-800 text-[9px] font-medium leading-none text-white">
+              <motion.span
+                key={cartCount}
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-neutral-800 text-[9px] font-medium leading-none text-white"
+              >
                 {cartCount > 9 ? "9+" : cartCount}
-              </span>
+              </motion.span>
             )}
           </Link>
         </div>

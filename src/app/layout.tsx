@@ -7,6 +7,7 @@ import { ToastProvider } from "@/context/ToastContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ToastContainer } from "@/components/ToastContainer";
+import AnimatedPage from "@/components/AnimatedPage";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -42,7 +43,9 @@ export default function RootLayout({
           <WishlistProvider>
             <CartProvider>
               <Navbar />
-              <main className="flex-1">{children}</main>
+              <main className="flex-1">
+                <AnimatedPage>{children}</AnimatedPage>
+              </main>
               <Footer />
               <ToastContainer />
             </CartProvider>

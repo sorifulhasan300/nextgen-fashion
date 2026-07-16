@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -42,7 +43,11 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="group block">
+    <motion.div
+      className="group block"
+      whileHover={{ scale: 1.02 }}
+      transition={{ type: "spring", stiffness: 300, damping: 20 }}
+    >
       <div className="relative overflow-hidden rounded-2xl bg-[#F5F2ED] border border-neutral-100 transition-all duration-500 ease-out">
         <div className="relative aspect-[3/4] overflow-hidden">
           <Image
@@ -112,6 +117,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         </div>
       </Link>
-    </div>
+    </motion.div>
   );
 }
