@@ -2,16 +2,47 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Star, ArrowRight } from "lucide-react";
+import { useState } from "react";
+import { Star, ArrowRight, Heart } from "lucide-react";
 import { Product } from "@/types/product";
+import { useWishlist } from "@/context/WishlistContext";
+import { useToast } from "@/context/ToastContext";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist();
+  const { showToast } = useToast();
+  const [isTapped, setIsTapped] = useState(false);
+  const wishlisted = isInWishlist(product.id);
+
+  const handleWishlistToggle = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsTapped(true);
+    setTimeout(() => setIsTapped(false), 150);
+
+    if (wishlisted) {
+      removeFromWishlist(product.id);
+      showToast({
+        message: `${product.name} removed from wishlist`,
+        label: "REMOVED",
+        type: "wishlist",
+      });
+    } else {
+      addToWishlist(product);
+      showToast({
+        message: `${product.name} saved for later`,
+        label: "WISHLIST",
+        type: "wishlist",
+      });
+    }
+  };
+
   return (
-    <Link href={`/product/${product.id}`} className="group block">
+    <div className="group block">
       <div className="relative overflow-hidden rounded-2xl bg-[#F5F2ED] border border-neutral-100 transition-all duration-500 ease-out">
         <div className="relative aspect-[3/4] overflow-hidden">
           <Image
@@ -31,9 +62,27 @@ export default function ProductCard({ product }: ProductCardProps) {
               </span>
             )}
           </div>
+          <button
+            onClick={handleWishlistToggle}
+            className={`absolute right-3 top-3 flex size-8 items-center justify-center rounded-full border border-neutral-200/60 bg-[#FAF8F5]/90 backdrop-blur-sm transition-all duration-300 ${
+              wishlisted
+                ? "border-rose-200/60 bg-rose-50/90"
+                : "border-neutral-200/60 bg-[#FAF8F5]/90"
+            } ${isTapped ? "scale-90" : "scale-100"}`}
+            aria-label={wishlisted ? "Remove from wishlist" : "Add to wishlist"}
+          >
+            <Heart
+              strokeWidth={1.5}
+              className={`size-3.5 transition-colors duration-300 ${
+                wishlisted
+                  ? "fill-rose-400 text-rose-400"
+                  : "text-neutral-600"
+              }`}
+            />
+          </button>
         </div>
       </div>
-      <div className="mt-3.5 space-y-1.5">
+      <Link href={`/product/${product.id}`} className="block mt-3.5 space-y-1.5">
         <div className="flex items-center gap-1">
           {[1, 2, 3, 4, 5].map((star) => (
             <Star
@@ -62,7 +111,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             <ArrowRight strokeWidth={1.5} className="size-3 transition-transform duration-300 group-hover:translate-x-0.5" />
           </span>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 }

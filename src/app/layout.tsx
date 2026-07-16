@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "@/context/CartContext";
+import { WishlistProvider } from "@/context/WishlistContext";
 import { ToastProvider } from "@/context/ToastContext";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -38,12 +39,14 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col bg-[#FAF8F5] text-neutral-800">
         <ToastProvider>
-          <CartProvider>
-            <Navbar />
-            <main className="flex-1">{children}</main>
-            <Footer />
-            <ToastContainer />
-          </CartProvider>
+          <WishlistProvider>
+            <CartProvider>
+              <Navbar />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <ToastContainer />
+            </CartProvider>
+          </WishlistProvider>
         </ToastProvider>
       </body>
     </html>

@@ -4,9 +4,10 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { Star, ArrowLeft, Check } from "lucide-react";
+import { Star, ArrowLeft, Check, Heart } from "lucide-react";
 import { products } from "@/data/products";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 import { useToast } from "@/context/ToastContext";
 import { Button } from "@/components/ui/button";
 
@@ -39,10 +40,12 @@ export default function ProductPage() {
   const productId = parseInt(params.id as string);
   const product = products.find((p) => p.id === productId);
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
   const { showToast } = useToast();
 
   const [selectedSize, setSelectedSize] = useState("");
   const [selectedColor, setSelectedColor] = useState("");
+  const [isWishlistTapped, setIsWishlistTapped] = useState(false);
 
   if (isNaN(productId) || !product) {
     return (
@@ -83,15 +86,37 @@ export default function ProductPage() {
   const handleAddToCart = () => {
     if (!product.inStock) return;
     if (!selectedSize) {
-      showToast("Please select a size");
+      showToast({ message: "Please select a size", type: "info" });
       return;
     }
     if (!selectedColor) {
-      showToast("Please select a color");
+      showToast({ message: "Please select a color", type: "info" });
       return;
     }
     addToCart(product, selectedSize, selectedColor);
-    showToast("Added to cart");
+    showToast({ message: "Added to cart", label: "ADDED TO CART", type: "cart" });
+  };
+
+  const wishlisted = isInWishlist(product.id);
+
+  const handleWishlistToggle = () => {
+    setIsWishlistTapped(true);
+    setTimeout(() => setIsWishlistTapped(false), 150);
+    if (wishlisted) {
+      removeFromWishlist(product.id);
+      showToast({
+        message: `${product.name} removed from wishlist`,
+        label: "REMOVED",
+        type: "wishlist",
+      });
+    } else {
+      addToWishlist(product);
+      showToast({
+        message: `${product.name} saved for later`,
+        label: "WISHLIST",
+        type: "wishlist",
+      });
+    }
   };
 
   return (
@@ -212,6 +237,26 @@ export default function ProductPage() {
                   );
                 })}
               </div>
+            </div>
+
+            <div className="flex items-center gap-3 mb-4">
+              <button
+                onClick={handleWishlistToggle}
+                className={`flex h-11 items-center justify-center rounded-xl border px-4 text-sm font-medium tracking-wide transition-all duration-300 ${
+                  wishlisted
+                    ? "border-rose-200 bg-rose-50 text-rose-500"
+                    : "border-neutral-200 bg-white text-neutral-600 hover:border-neutral-800 hover:text-neutral-800"
+                } ${isWishlistTapped ? "scale-95" : "scale-100"}`}
+              >
+                <Heart
+                  strokeWidth={1.5}
+                  className={`size-4 transition-colors duration-300 ${
+                    wishlisted
+                      ? "fill-rose-400 text-rose-400"
+                      : "text-neutral-600"
+                  }`}
+                />
+              </button>
             </div>
 
             <Button

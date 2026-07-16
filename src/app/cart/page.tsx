@@ -45,12 +45,12 @@ export default function CartPage() {
         next.delete(key);
         return next;
       });
-      showToast("Item removed from cart");
+      showToast({ message: "Item removed from cart", label: "REMOVED", type: "cart" });
     }, 300);
   };
 
   const handleCheckout = () => {
-    showToast("Order simulation successful!");
+    showToast({ message: "Order simulation successful!", label: "SUCCESS", type: "cart" });
   };
 
   if (cartItems.length === 0) {

@@ -6,6 +6,7 @@ import {
   Search,
   User,
   ShoppingBag,
+  Heart,
   Truck,
   Menu,
   X,
@@ -20,6 +21,7 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 const navLinks = [
   { href: "/", label: "Home" },
@@ -32,6 +34,7 @@ const navLinks = [
 export default function Navbar() {
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const cartCount = useCart().getCartCount();
+  const wishlistCount = useWishlist().getWishlistCount();
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-[#FAF8F5]">
@@ -120,6 +123,18 @@ export default function Navbar() {
             aria-label="Account"
           >
             <User strokeWidth={1.5} className="size-[18px]" />
+          </Link>
+          <Link
+            href="/wishlist"
+            className="relative flex h-9 w-9 items-center justify-center text-neutral-500 transition-colors hover:text-neutral-800"
+            aria-label="Wishlist"
+          >
+            <Heart strokeWidth={1.5} className="size-[18px]" />
+            {wishlistCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-neutral-800 text-[9px] font-medium leading-none text-white">
+                {wishlistCount > 9 ? "9+" : wishlistCount}
+              </span>
+            )}
           </Link>
           <Link
             href="/cart"
