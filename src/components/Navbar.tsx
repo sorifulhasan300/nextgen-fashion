@@ -2,15 +2,8 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import {
-  Search,
-  User,
-  ShoppingBag,
-  Heart,
-  Truck,
-  Menu,
-  X,
-} from "lucide-react";
+import { usePathname } from "next/navigation";
+import { Search, User, ShoppingBag, Heart, Truck, Menu, X } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import {
@@ -33,9 +26,15 @@ const navLinks = [
 ];
 
 export default function Navbar() {
+  const pathname = usePathname();
   const [announcementDismissed, setAnnouncementDismissed] = useState(false);
   const cartCount = useCart().getCartCount();
   const wishlistCount = useWishlist().getWishlistCount();
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-neutral-200 bg-[#FAF8F5]">
@@ -101,30 +100,21 @@ export default function Navbar() {
             <Link
               key={link.href}
               href={link.href}
-              className="group relative text-[12px] font-bold tracking-[0.18em] text-neutral-500 uppercase transition-colors hover:text-neutral-800"
+              className={`group relative text-[12px] font-bold tracking-[0.18em] uppercase transition-colors hover:text-neutral-800 ${
+                isActive(link.href) ? "text-neutral-800" : "text-neutral-500"
+              }`}
             >
               {link.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-neutral-800 transition-all duration-300 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1 left-0 h-px bg-neutral-800 transition-all duration-300 ${
+                  isActive(link.href) ? "w-full" : "w-0 group-hover:w-full"
+                }`}
+              />
             </Link>
           ))}
         </nav>
 
         <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="h-9 w-9 text-neutral-500 hover:text-neutral-800"
-            aria-label="Search"
-          >
-            <Search strokeWidth={1.5} className="size-[18px]" />
-          </Button>
-          <Link
-            href="/account"
-            className="flex h-9 w-9 items-center justify-center text-neutral-500 transition-colors hover:text-neutral-800"
-            aria-label="Account"
-          >
-            <User strokeWidth={1.5} className="size-[18px]" />
-          </Link>
           <Link
             href="/wishlist"
             className="relative flex h-9 w-9 items-center justify-center text-neutral-500 transition-colors hover:text-neutral-800"

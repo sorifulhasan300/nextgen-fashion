@@ -47,8 +47,6 @@ export default function HeroSection() {
         </div>
         <div className="order-1 lg:order-2 relative">
           <div className="relative mx-auto max-w-lg lg:max-w-none">
-            <div className="absolute -inset-4 rounded-[2rem] bg-[#EDE8E0] -z-10" />
-            <div className="absolute -inset-8 rounded-[2.5rem] bg-[#F0EBE3] -z-10 opacity-60" />
             <div className="relative aspect-[4/5] overflow-hidden rounded-[1.5rem]">
               <Image
                 src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
